@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Risa is here</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff0f5;
+      text-align: center;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+    h1 {
+      color: #ff69b4;
+    }
+    .button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ffc0cb;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .button:hover {
+      transform: scale(1.05);
+    }
+    .heart {
+      position: fixed;
+      font-size: 24px;
+      animation: floatUp 3s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.5);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="headline">Hai hai Risa is here</h1>
+  <div id="chat"></div>
+  <div id="options"></div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const options = document.getElementById('options');
+    const headline = document.getElementById('headline');
+
+    function showQuestion(text, buttons) {
+      headline.style.display = 'none'; // Sembunyikan perkenalan
+      chat.innerHTML = `<p>${text}</p>`;
+      options.innerHTML = '';
+      buttons.forEach(btn => {
+        const button = document.createElement('button');
+        button.innerText = btn.label;
+        button.className = 'button';
+        button.onclick = btn.action;
+        options.appendChild(button);
+      });
+    }
+
+    function startConversation() {
+      // Tunggu 2 detik baru mulai, biar headline sempat muncul
+      setTimeout(() => {
+        showQuestion("Kamu suka cewek gak?", [
+          { label: "suka dongggss", action: sukaDongg },
+          { label: "iyalah masa suka botita :(", action: sukaBotita }
+        ]);
+      }, 2000);
+    }
+
+    function sukaBotita() {
+      chat.innerHTML = `<p>Heh! Cowok seganteng kamu gak boleh suka botita yaa</p>`;
+      setTimeout(() => {
+        showQuestion("Kamu suka cewek gak?", [
+          { label: "iya suka", action: sukaDongg },
+          { label: "iya suka, tadi cuman bercanda", action: sukaDongg }
+        ]);
+      }, 2000);
+    }
+
+    function sukaDongg() {
+      showQuestion("Kamu suka cewek yang makan 3x sehari atau cewek yang makan 300x sehari?", [
+        { label: "cewek makan sehari 3x", action: tinggiCewek },
+        { label: "mana ada cewek makan 300x sehari, cewek yang makan sehari 3x lah", action: tinggiCewek }
+      ]);
+    }
+
+    function tinggiCewek() {
+      showQuestion("Kamu suka cewek yang tingginya 160 cm atau 160 km/jam?", [
+        { label: "cewek tinggi 160 cm", action: pengakuan },
+        { label: "160 km/jam mah kecepatan aku menghampirimu. Cewek tinggi 160 cm aja", action: pengakuan }
+      ]);
+    }
+
+    function pengakuan() {
+      chat.innerHTML = `
+        <p>Waduh, ternyata aku masuk kriteria cewek yang kamu suka nih</p>
+        <p>Gimana kalo aku jadi cewek kamu aja?</p>
+        <p>Atau kalo kamu gak suka, gimana kalo kamu aja yang jadi cowok aku?</p>
+      `;
+      options.innerHTML = '';
+      const btn1 = document.createElement('button');
+      btn1.className = 'button';
+      btn1.innerText = "yes";
+      btn1.onclick = akhir;
+      const btn2 = document.createElement('button');
+      btn2.className = 'button';
+      btn2.innerText = "yes";
+      btn2.onclick = akhir;
+      options.appendChild(btn1);
+      options.appendChild(btn2);
+    }
+
+    function akhir() {
+      chat.innerHTML = `<p>Dari sekarang dan seterusnya tolong sukain aku terus yaaaaa 💖</p>`;
+      options.innerHTML = '';
+      startLoveAnimation();
+    }
+
+    // Animasi hati terbang
+    function startLoveAnimation() {
+      const loveInterval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3000);
+      }, 200);
+
+      setTimeout(() => {
+        clearInterval(loveInterval);
+      }, 5000);
+    }
+
+    // Mulai dari awal
+    startConversation();
+  </script>
+
+</body>
+</html>
